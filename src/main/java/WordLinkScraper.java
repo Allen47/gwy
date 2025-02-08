@@ -32,9 +32,13 @@ public class WordLinkScraper {
 
                 // 抓取对应页面内容
                 Document wordPage = Jsoup.connect(wordUrl).get();
-                Element contentElement = wordPage.selectFirst("div.dyw1027new-catalogue-content p");
 
-                String wordContent = (contentElement != null) ? contentElement.text() : "未找到内容";
+                // 拼接所有<p>标签内容
+                Elements contentElements = wordPage.select("div.dyw1027new-catalogue-content p");
+                StringBuilder wordContent = new StringBuilder();
+                for (Element paragraph : contentElements) {
+                    wordContent.append(paragraph.text()).append("\n");
+                }
 
                 // 将单词标题和内容添加到StringBuilder中
                 wordContents.append("单词: ").append(wordTitle).append("\n");
