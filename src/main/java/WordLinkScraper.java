@@ -21,6 +21,7 @@ public class WordLinkScraper {
             // 3. 创建StringBuilder来存储提取的内容
             StringBuilder wordContents = new StringBuilder();
 
+            int i = 1;
             // 4. 遍历每个单词链接，抓取对应页面内容
             for (Element link : wordLinks) {
                 String wordTitle = link.text(); // 获取单词标题
@@ -41,7 +42,7 @@ public class WordLinkScraper {
                 }
 
                 // 将单词标题和内容添加到StringBuilder中
-                wordContents.append("单词: ").append(wordTitle).append("\n");
+                wordContents.append(i++).append("、词语: ").append(wordTitle).append("\n");
                 wordContents.append("内容: ").append(wordContent).append("\n\n");
             }
 
