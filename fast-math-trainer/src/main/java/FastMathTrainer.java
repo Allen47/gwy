@@ -83,25 +83,25 @@ public class FastMathTrainer {
                 num1 = random.nextInt(999) + 1; // 1到999之间的数（包括一位数、两位数、三位数）
                 num2 = random.nextInt(999) + 1; // 1到999之间的数（包括一位数、两位数、三位数）
                 correctAnswer = num1 + num2;
-                questionLabel.setText(num1 + " + " + num2 + " = ?");
+                questionLabel.setText(num1 + " + " + num2);
                 break;
             case 1:  // 减法
                 num1 = random.nextInt(999) + 1; // 1到999之间的数（包括一位数、两位数、三位数）
                 num2 = random.nextInt(num1) + 1; // 确保 num2 小于等于 num1
                 correctAnswer = num1 - num2;
-                questionLabel.setText(num1 + " - " + num2 + " = ?");
+                questionLabel.setText(num1 + " - " + num2);
                 break;
             case 2:  // 乘法
                 num1 = random.nextInt(99) + 1; // 1到99之间的数（包括一位数、两位数）
                 num2 = random.nextInt(99) + 1; // 1到99之间的数（包括一位数、两位数）
                 correctAnswer = num1 * num2;
-                questionLabel.setText(num1 + " × " + num2 + " = ?");
+                questionLabel.setText(num1 + " × " + num2);
                 break;
             case 3:  // 除法
                 num2 = random.nextInt(99) + 1; // 1到99之间的数（包括一位数、两位数）
                 correctAnswer = random.nextInt(99) + 1; // 1到99之间的数
                 num1 = correctAnswer * num2; // 确保能整除
-                questionLabel.setText(num1 + " ÷ " + num2 + " = ?");
+                questionLabel.setText(num1 + " ÷ " + num2);
                 break;
         }
 
@@ -118,7 +118,7 @@ public class FastMathTrainer {
                 nextQuestionReady = true;
                 new Timer(1000, e -> generateNewProblem()).start();
             } else {
-                questionLabel.setText("作答:" + userAnswer + ",正确答案: " + correctAnswer);
+                questionLabel.setText( questionLabel.getText() + ",正确答案: " + correctAnswer);
                 waitForNext = true;
             }
         } catch (NumberFormatException e) {
