@@ -12,7 +12,7 @@ public class FastMathTrainer {
     private static int correctAnswer;
     private static boolean waitForNext = false;
     private static boolean nextQuestionReady = true;
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(FastMathTrainer::createUI);
@@ -44,15 +44,8 @@ public class FastMathTrainer {
         answerField.setBorder(null);
         answerField.setBackground(new Color(0, 0, 0, 0));
 
-        // **🔹 让光标默认隐藏，不会一直闪烁**
-        DefaultCaret caret = new DefaultCaret() {
-            @Override
-            public void setVisible(boolean visible) {
-                super.setVisible(false); // 让光标默认不可见
-            }
-        };
-        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
-        answerField.setCaret(caret);
+        // 禁用光标闪烁，隐藏光标
+        answerField.setCaretColor(new Color(0, 0, 0, 0));  // 设置光标颜色为透明，隐藏光标
 
         answerField.addKeyListener(new KeyAdapter() {
             @Override
