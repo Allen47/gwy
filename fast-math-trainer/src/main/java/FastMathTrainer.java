@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
@@ -80,28 +79,28 @@ public class FastMathTrainer {
         int num1, num2;
 
         switch (opType) {
-            case 0:
-                num1 = random.nextInt(900) + 100;
-                num2 = random.nextInt(90) + 10;
+            case 0:  // 加法
+                num1 = random.nextInt(999) + 1; // 1到999之间的数（包括一位数、两位数、三位数）
+                num2 = random.nextInt(999) + 1; // 1到999之间的数（包括一位数、两位数、三位数）
                 correctAnswer = num1 + num2;
                 questionLabel.setText(num1 + " + " + num2 + " = ?");
                 break;
-            case 1:
-                num1 = random.nextInt(900) + 100;
-                num2 = random.nextInt(90) + 10;
+            case 1:  // 减法
+                num1 = random.nextInt(999) + 1; // 1到999之间的数（包括一位数、两位数、三位数）
+                num2 = random.nextInt(num1) + 1; // 确保 num2 小于等于 num1
                 correctAnswer = num1 - num2;
                 questionLabel.setText(num1 + " - " + num2 + " = ?");
                 break;
-            case 2:
-                num1 = random.nextInt(90) + 10;
-                num2 = random.nextInt(9) + 1;
+            case 2:  // 乘法
+                num1 = random.nextInt(99) + 1; // 1到99之间的数（包括一位数、两位数）
+                num2 = random.nextInt(99) + 1; // 1到99之间的数（包括一位数、两位数）
                 correctAnswer = num1 * num2;
                 questionLabel.setText(num1 + " × " + num2 + " = ?");
                 break;
-            case 3:
-                num2 = random.nextInt(9) + 1;
-                correctAnswer = random.nextInt(90) + 10;
-                num1 = correctAnswer * num2;
+            case 3:  // 除法
+                num2 = random.nextInt(99) + 1; // 1到99之间的数（包括一位数、两位数）
+                correctAnswer = random.nextInt(99) + 1; // 1到99之间的数
+                num1 = correctAnswer * num2; // 确保能整除
                 questionLabel.setText(num1 + " ÷ " + num2 + " = ?");
                 break;
         }
