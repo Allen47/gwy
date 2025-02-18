@@ -36,6 +36,8 @@
         </configuration>
       </plugin>
 
+
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -90,6 +92,26 @@
             <phase>none</phase>
           </execution>
         </executions>
+      </plugin>
+
+      <!-- 清理插件，排除生成的文件夹 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${project.build.directory}</directory>
+              <includes>
+                <include>**/*</include>
+              </includes>
+              <excludes>
+                <exclude>*.jar</exclude> <!-- 只保留 .jar 文件 -->
+              </excludes>
+            </fileset>
+          </filesets>
+        </configuration>
       </plugin>
     </plugins>
   </build>
