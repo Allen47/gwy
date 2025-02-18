@@ -189,6 +189,8 @@ public class TransparentDraggableWindowJLabel {
             int endIndex = Math.min(currentCharIndex + CHARACTERS_PER_LINE, line.length());
 
             String newText = line.substring(currentCharIndex, endIndex);
+            // 将普通空格替换为 &nbsp; 以确保空格如实展示
+            newText = newText.replace(" ", "&nbsp;");
 
             // 使用 HTML 标签控制文本显示，确保文本不会换行
             label.setText("<html><body style='width: " + LABEL_WIDTH + "px; white-space: nowrap;'>" + newText + "</body></html>");
