@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FastMathTrainer {
     private static JFrame frame;
@@ -12,13 +14,54 @@ public class FastMathTrainer {
     private static boolean waitForNext = false;
     private static boolean nextQuestionReady = true;
     private static final Random random = new Random();
+    private static final Map<Double, Integer> percentageToDenominatorMap = new HashMap<>();
+    private static int mode = 0; // 1 for Fast Math, 2 for Percentage to Fraction
+
+    static {
+        percentageToDenominatorMap.put(100.0, 1);
+        percentageToDenominatorMap.put(50.0, 2);
+        percentageToDenominatorMap.put(33.3, 3);
+        percentageToDenominatorMap.put(25.0, 4);
+        percentageToDenominatorMap.put(20.0, 5);
+        percentageToDenominatorMap.put(16.7, 6);
+        percentageToDenominatorMap.put(14.3, 7);
+        percentageToDenominatorMap.put(12.5, 8);
+        percentageToDenominatorMap.put(11.1, 9);
+        percentageToDenominatorMap.put(10.0, 10);
+        percentageToDenominatorMap.put(9.1, 11);
+        percentageToDenominatorMap.put(8.3, 12);
+        percentageToDenominatorMap.put(7.7, 13);
+        percentageToDenominatorMap.put(7.1, 14);
+        percentageToDenominatorMap.put(6.7, 15);
+        percentageToDenominatorMap.put(6.3, 16);
+        percentageToDenominatorMap.put(5.9, 17);
+        percentageToDenominatorMap.put(5.6, 18);
+        percentageToDenominatorMap.put(5.3, 19);
+        percentageToDenominatorMap.put(5.0, 20);
+    }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(FastMathTrainer::createUI);
+        SwingUtilities.invokeLater(FastMathTrainer::chooseMode);
+    }
+
+    private static void chooseMode() {
+        String input = JOptionPane.showInputDialog(null, "请选择练习模式：\n1 - 速算练习\n2 - 百化分练习", "选择模式", JOptionPane.QUESTION_MESSAGE);
+        try {
+            mode = Integer.parseInt(input);
+            if (mode == 1 || mode == 2) {
+                SwingUtilities.invokeLater(FastMathTrainer::createUI);
+            } else {
+                JOptionPane.showMessageDialog(null, "无效的选择，请输入1或2。", "错误", JOptionPane.ERROR_MESSAGE);
+                chooseMode();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "无效的选择，请输入1或2。", "错误", JOptionPane.ERROR_MESSAGE);
+            chooseMode();
+        }
     }
 
     private static void createUI() {
-        frame = new JFrame("速算练习");
+        frame = new JFrame("数学练习");
         frame.setUndecorated(true);
         frame.setSize(320, 100);
         frame.setAlwaysOnTop(true);
@@ -75,6 +118,14 @@ public class FastMathTrainer {
         if (!nextQuestionReady) return;
 
         nextQuestionReady = false;
+        if (mode == 1) {
+            generateFastMathProblem();
+        } else if (mode == 2) {
+            generatePercentageToFractionProblem();
+        }
+    }
+
+    private static void generateFastMathProblem() {
         int opType = random.nextInt(4);
         int num1, num2;
 
@@ -110,6 +161,17 @@ public class FastMathTrainer {
         panel.setBackground(new Color(0, 0, 0, 180));
     }
 
+    private static void generatePercentageToFractionProblem() {
+        Double[] percentages = percentageToDenominatorMap.keySet().toArray(new Double[0]);
+        Double selectedPercentage = percentages[random.nextInt(percentages.length)];
+        correctAnswer = percentageToDenominatorMap.get(selectedPercentage);
+        questionLabel.setText(selectedPercentage + "%");
+
+        answerField.setText("");
+        answerField.requestFocus();
+        panel.setBackground(new Color(0, 0, 0, 180));
+    }
+
     private static void checkAnswer() {
         try {
             int userAnswer = Integer.parseInt(answerField.getText().trim());
@@ -118,7 +180,7 @@ public class FastMathTrainer {
                 nextQuestionReady = true;
                 new Timer(1000, e -> generateNewProblem()).start();
             } else {
-                questionLabel.setText( questionLabel.getText() + ",正确答案: " + correctAnswer);
+                questionLabel.setText(questionLabel.getText() + ",正确答案: " + correctAnswer);
                 waitForNext = true;
             }
         } catch (NumberFormatException e) {
