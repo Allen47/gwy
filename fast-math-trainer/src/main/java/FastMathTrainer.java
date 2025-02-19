@@ -46,6 +46,9 @@ public class FastMathTrainer {
 
     private static void chooseMode() {
         String input = JOptionPane.showInputDialog(null, "请选择练习模式：\n1 - 速算练习\n2 - 百化分练习", "选择模式", JOptionPane.QUESTION_MESSAGE);
+        if (input == null) {
+            System.exit(0); // 用户点击了关闭或取消
+        }
         try {
             mode = Integer.parseInt(input);
             if (mode == 1 || mode == 2) {
